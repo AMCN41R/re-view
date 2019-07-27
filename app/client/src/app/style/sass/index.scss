@@ -1,0 +1,18 @@
+@import './overrides/material.scss';
+@import './flex.scss';
+
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}

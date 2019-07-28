@@ -1,0 +1,27 @@
+{
+  "name": "review-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "build": "tsc",
+    "build:run": "npm run build && npm start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async-redis": "^1.1.7",
+    "express": "^4.16.4",
+    "path": "^0.12.7",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/redis": "^2.8.12",
+    "tslint": "^5.16.0",
+    "tslint-react": "^4.0.0",
+    "typescript": "^3.4.5"
+  }
+}

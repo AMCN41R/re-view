@@ -6,7 +6,7 @@ import RedisFactory, { RedisConnectionOptions } from './RedisDbFactory';
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, '/client')));
+app.use(express.static(path.join(__dirname, '/../../../packages/client/dist')));
 app.use(express.json());
 
 app.get('/api/test', (req, res) => {
@@ -62,7 +62,7 @@ app.post('/api/redis/:name/get', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/index.html'));
+  res.sendFile(path.join(__dirname + '/../../../packages/client/dist/index.html'));
 });
 
 console.log('App available at localhost:8080');

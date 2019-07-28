@@ -16,7 +16,7 @@ const ensureArray = (config) => config && (Array.isArray(config) ? config : [con
 const when = (condition, config, negativeConfig) => condition ? ensureArray(config) : ensureArray(negativeConfig);
 
 // primary config:
-const outDir = path.resolve(__dirname, "../dist/client");
+const outDir = path.resolve(__dirname, "dist");
 const srcDir = path.resolve(__dirname, "src");
 const nodeModulesDir = path.resolve(__dirname, "node_modules");
 const baseUrl = "/";

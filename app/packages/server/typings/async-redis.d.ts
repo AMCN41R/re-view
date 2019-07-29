@@ -43,22 +43,93 @@ declare module 'async-redis' {
     retry_strategy: (opts: RedisRetryStrategyOptions) => number | Error | undefined;
   }
 
-  interface RedisClient {
-    config: OverloadedCommand<string, any>;
-
+  interface RedisCommands {
+    /**
+     * Get the value of key. If the key does not exist the special value nil is
+     * returned. An error is returned if the value stored at key is not a string,
+     * because GET only handles string values.
+     *
+     * @param  {string} key
+     * @returns the value of key, or nil when key does not exist.
+     */
     get(key: string): Promise<string>;
 
-    keys(pattern: string): Promise<string[]>;
-
-    on(event: string, listener: (...args: any[]) => void): this;
-
-    select(index: number | string): Promise<void>
-
+    /**
+     * Set key to hold the string value. If key already holds a value, it is
+     * overwritten, regardless of its type. Any previous time to live associated
+     * with the key is discarded.
+     *
+     * @param  {string} key
+     * @param  {string} value
+     * @returns 'OK'
+     */
     set(key: string, value: string): Promise<'OK'>;
+
+    /**
+     * Set key to hold the string value and set key to timeout after a given number of seconds.
+     *
+     * @param  {string} key
+     * @param  {number} seconds
+     * @param  {string} value
+     * @returns 'OK'
+     */
+    setex(key: string, seconds: number, value: string): Promise<'OK'>;
+
+    /**
+     * Removes the specified keys. A key is ignored if it does not exist.
+     *
+     * @param  {string} key
+     * @returns the number of keys that were deleted.
+     */
+    del(key: string): Promise<number>;
+
+    /**
+     * Determies if a key exists.
+     *
+     * @param  {string} key
+     * @returns 1 if the key exists, otherwise 0.
+     */
+    exists(key: string): Promise<number>;
+
+    /**
+     * Set a timeout on key. After the timeout has expired, the key will
+     * automatically be deleted.
+     *
+     * @param  {string} key
+     * @param  {number} seconds
+     * @returns 1 if the timeout was set, 0 if key does not exist.
+     */
+    expire(key: string, seconds: number): Promise<number>;
+
+    /**
+     * Remove the existing timeout on the given key.
+     *
+     * @param  {string} key
+     * @returns 1 if the timeout was removed, 0 if key does not exist or does
+     * not have an associated timeout.
+     */
+    persist(key: string): Promise<number>;
+
+    /**
+     * Returns the remaining time to live in seconds of a key that has a timeout.
+     * This introspection capability allows a Redis client to check how many seconds
+     * a given key will continue to be part of the dataset.
+     *
+     * @param  {string} key
+     * @returns -2 if the key does not exist, -1 if the key exists but has no
+     * associated expire, otherwise the ttl in seconds.
+     */
+    ttl(key: string): Promise<number>;
+  }
+
+  interface RedisClient extends RedisCommands {
+    config: OverloadedCommand<string, any>;
 
     scan: OverloadedCommand<string, [string, string[]]>;
 
-    end(flush?: boolean): void;
+    keys(pattern: string): Promise<string[]>;
+
+    select(index: number | string): Promise<void>
 
     on(event: 'ready' | 'connect' | 'reconnecting' | 'error' | 'warning' | 'end', listener: (...args: any[]) => void): this;
   }

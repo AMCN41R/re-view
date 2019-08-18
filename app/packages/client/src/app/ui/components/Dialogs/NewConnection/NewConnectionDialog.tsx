@@ -13,13 +13,13 @@ import ErrorText from 'ui/components/ErrorText';
 import DetailsForm from './DetailsForm';
 
 export interface IDialogProps {
-  existingConnectionNames: string[];
   open: boolean;
   onClose?: (result: IDialogResult) => void;
 }
 
 interface IProps extends IDialogProps {
   newStatus: NewConnectionStatus;
+  existingConnectionNames: string[];
   onSave: (opts: IRedisConnection) => void;
 }
 
@@ -53,7 +53,7 @@ const infoDialog: React.SFC<IProps> = (props): JSX.Element => {
     <Dialog
       open={isOpen}
       fullWidth={true}
-      maxWidth="lg"
+      maxWidth="md"
       TransitionComponent={transition}
       keepMounted
       onClose={(): void => handleClose(false, props, setIsOpen)}

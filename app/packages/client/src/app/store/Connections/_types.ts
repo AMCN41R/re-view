@@ -12,4 +12,7 @@ interface IRedisConnection {
   name: string;
   host: string;
   port: number;
+  password?: string;
+  useSsl?: boolean;
+  isFavourite: boolean;
 }

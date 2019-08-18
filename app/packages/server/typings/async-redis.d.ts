@@ -41,6 +41,15 @@ declare module 'async-redis' {
     //     }
     // });
     retry_strategy: (opts: RedisRetryStrategyOptions) => number | Error | undefined;
+
+    /**
+     * If set, client will run Redis auth command on connect. Alias: auth_pass, default: null.
+     */
+    password?: string | null;
+
+    tls?: {
+      servername: string
+    } | null;
   }
 
   interface RedisCommands {
@@ -132,6 +141,8 @@ declare module 'async-redis' {
     select(index: number | string): Promise<void>
 
     on(event: 'ready' | 'connect' | 'reconnecting' | 'error' | 'warning' | 'end', listener: (...args: any[]) => void): this;
+
+    auth(password: string): Promise<string>;
   }
 
   interface OverloadedCommand<T, U> {

@@ -1,5 +1,6 @@
 node_modules
-npm-debug.log
-Dockerfile
-.dockerignore
 dist
+Dockerfile
+npm-debug.log
+.dockerignore
+.vscode

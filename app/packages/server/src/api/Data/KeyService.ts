@@ -7,7 +7,7 @@ export namespace KeyService {
     clientName: string,
     db: number | string,
     query: DbKeysRequest
-  ): Promise<DbKeySearchResult> => {
+  ): Promise<DbFlatKeySearchResult> => {
     checkIsValidString(clientName);
     Validate.dbKeysRequest(query);
 
@@ -25,7 +25,9 @@ export namespace KeyService {
     }
 
     const pageSize = query.pageSize || 1000;
+
     const result = await redis.client.scan('0', 'MATCH', filter, 'COUNT', `${pageSize}`);
+
     return {
       cursor: result[0],
       keys: result[1]

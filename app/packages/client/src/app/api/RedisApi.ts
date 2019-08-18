@@ -11,8 +11,17 @@ export namespace RedisApi {
     return response;
   };
 
-  export const getDatabases = async (clientName: string): Promise<FetchResponse<ClientDatabseResult>> => {
-    const response = await api.get<ClientDatabseResult>(`redis/${clientName}/databases`);
+  export const getDatabases = async (clientName: string): Promise<FetchResponse<ClientDatabaseResult>> => {
+    const response = await api.get<ClientDatabaseResult>(`redis/${clientName}/databases`);
+    return response;
+  };
+
+  export const getKeysFlat = async (
+    clientName: string,
+    db: string,
+    query: DbKeysRequest
+  ): Promise<FetchResponse<DbFlatKeySearchResult>> => {
+    const response = await api.post<DbFlatKeySearchResult>(`redis/${clientName}/${db}/keys-flat`, query);
     return response;
   };
 

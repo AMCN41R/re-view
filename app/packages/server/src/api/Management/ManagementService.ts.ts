@@ -18,7 +18,7 @@ export namespace ManagementService {
     return await RedisFactory.createClient(opts);
   };
 
-  export const getDatabases = async (clientName: string): Promise<ClientDatabseResult> => {
+  export const getDatabases = async (clientName: string): Promise<ClientDatabaseResult> => {
     checkIsValidString(clientName);
 
     const redis = await RedisFactory.getClientOrThrow(clientName);

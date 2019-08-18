@@ -9,7 +9,9 @@ export const createRedisDbAsync = async (opts: RedisClientInfo): Promise<redis.R
       reject: (reason?: any) => void
     ) => {
       const client = redis.createClient(opts.port, opts.host, {
-        retry_strategy: retryStrategy
+        retry_strategy: retryStrategy,
+        password: opts.password || null,
+        tls: opts.useSsl ? { servername: opts.host } : null
       });
 
       client.on('ready', () => {
@@ -19,13 +21,13 @@ export const createRedisDbAsync = async (opts: RedisClientInfo): Promise<redis.R
       });
 
       client.on('error', (err) => {
-        console.log(`Redis Client Error: ${err}`);
+        console.error(`Redis Client Error: ${err}`);
         reject(err);
         return;
       });
 
       client.on('end', () => {
-        console.log('Redis Client Connection Ended.');
+        console.warn('Redis Client Connection Ended.');
         reject('Redis Client Connection Ended.');
         return;
       });

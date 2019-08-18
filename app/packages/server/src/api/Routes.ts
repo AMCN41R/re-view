@@ -8,6 +8,7 @@ import {
 import { ManagementService } from './Management/ManagementService.ts';
 import { KeyService } from './Data/KeyService';
 import { ValueService } from './Data/ValueService';
+import { convertToTree } from '../utils/tree';
 
 const routes = Router();
 
@@ -34,10 +35,19 @@ routes.post('/redis/create', async (
 
 routes.get('/redis/:name/databases', async (
   req: IRequest<any, { name: string }>,
-  res: IResponse<ClientDatabseResult>
+  res: IResponse<ClientDatabaseResult>
 ) => {
   const dbs = await ManagementService.getDatabases(req.params.name);
   res.send(dbs);
+});
+
+routes.post('/redis/:name/:db/keys-flat', async (
+  req: IRequest<DbKeysRequest, { name: string; db: string }>,
+  res: IResponse<DbFlatKeySearchResult>
+) => {
+  const { name, db } = req.params;
+  const keys = await KeyService.getKeys(name, db, req.body);
+  res.send(keys);
 });
 
 routes.post('/redis/:name/:db/keys', async (
@@ -46,7 +56,8 @@ routes.post('/redis/:name/:db/keys', async (
 ) => {
   const { name, db } = req.params;
   const keys = await KeyService.getKeys(name, db, req.body);
-  res.send(keys);
+  const tree: TreeItem[] = convertToTree(keys.keys);
+  res.send({ cursor: keys.cursor, items: tree });
 });
 
 routes.get('/redis/:name/:db/keys/:key', async (

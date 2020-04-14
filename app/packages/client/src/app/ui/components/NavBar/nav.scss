@@ -1,0 +1,29 @@
+ul {
+  &.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 2px 0;
+    background-color: #eee;
+    border-bottom: 1px solid #d0d0d0;
+  }
+}
+
+li {
+  &.nav-item {
+    float: left;
+
+    a {
+      cursor: pointer;
+      display: block;
+      color: #404854;
+      padding: 14px 16px;
+      text-decoration: none;
+      border-radius: 50%;
+      transition: 0.1s;
+
+      &:hover {
+        background-color: #dedede;
+      }
+    }
+  }
+}

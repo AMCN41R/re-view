@@ -1,0 +1,65 @@
+
+GET http://localhost:8080/test
+
+###
+
+GET http://localhost:8080/api/redis/con/all
+
+###
+
+POST http://localhost:8080/api/redis/connect
+Content-Type: application/json
+
+{
+  "name": "local",
+  "host": "localhost",
+  "port": 6379
+}
+
+###
+
+GET http://localhost:8080/api/redis/local/databases
+
+###
+// get STRING key
+GET http://localhost:8080/api/redis/keys/local/0/string/my-key
+
+###
+
+// get HASH set
+GET http://localhost:8080/api/redis/keys/local/0/hash/my-order
+
+###
+
+// get HASH set FIELD
+GET http://localhost:8080/api/redis/keys/local/0/hash/my-order/version
+
+###
+
+// rename a key
+POST http://localhost:8080/api/redis/keys/local/0/rename/test
+Content-Type: application/json
+
+{
+  "newName": "test-2"
+}
+
+###
+
+// search
+POST http://localhost:8080/api/redis/keys/local/0/search
+Content-Type: application/json
+
+{
+  "pageSize": 1000
+}
+
+###
+
+// search flat
+POST http://localhost:8080/api/redis/keys/local/0/search-flat
+Content-Type: application/json
+
+{
+  "pageSize": 1000
+}

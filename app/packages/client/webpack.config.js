@@ -1,5 +1,5 @@
 const path = require("path");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 const {
   SourceMapDevToolPlugin,
@@ -80,7 +80,14 @@ module.exports = ({ production, version } = {}) => ({
       version: version || "0.0.0.0"
     }),
     new HtmlWebpackExcludeAssetsPlugin(),
-    new CleanWebpackPlugin([outDir, "index.html"]),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: [
+        '!icons/**/*',
+        '!img/**/*',
+        '!vendor/**/*',
+        '!webfonts/**/*'
+      ]
+    }),
     new MiniCssExtractPlugin({
       filename: production ? '[contenthash].css' : '[id].css',
       allChunks: true
@@ -89,8 +96,10 @@ module.exports = ({ production, version } = {}) => ({
       from: `${srcDir}/static`,
       to: outDir
     },
-    { from: "./node_modules/react/umd/react.development.js", to: "./react.js" },
-    { from: "./node_modules/react-dom/umd/react-dom.development.js", to: "./react-dom.js" }
+    { from: "./node_modules/react/umd/react.development.js", to: "./vendor/react.js" },
+    { from: "./node_modules/react-dom/umd/react-dom.development.js", to: "./vendor/react-dom.js" },
+    { from: "./node_modules/@fortawesome/fontawesome-free/css/all.min.css", to: "./vendor/fontawesome.css" },
+    { from: "./node_modules/@fortawesome/fontawesome-free/webfonts", to: "./webfonts" },
     ]),
     ...when(!production, new SourceMapDevToolPlugin({
       filename: "[file].map"

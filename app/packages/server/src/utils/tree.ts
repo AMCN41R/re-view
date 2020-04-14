@@ -15,12 +15,13 @@ type FullTreeItem = {
   name: string;
   id: number;
   parentId: number;
+  path: string;
   children?: FullTreeItem[];
 };
 
 const flatten = (keys: string[], separator: string): FlatItem[] => {
   const results: FlatItem[] = [];
-  const map = new Map<string, { name: string; id: number }>(); // k: path
+  const map = new Map<string, { name: string; id: number }>();
   let idGen = 1;
   keys.forEach(key => {
     const parts = key.split(separator);
@@ -62,7 +63,7 @@ const flatten = (keys: string[], separator: string): FlatItem[] => {
 const toTree = (array: FullTreeItem[], parent?: FullTreeItem): FullTreeItem[] => {
 
   let tree: FullTreeItem[] = [];
-  parent = parent || { id: 0, name: 'root', parentId: -1 };
+  parent = parent || { id: 0, name: 'root', parentId: -1, path: '' };
 
   const children = array.filter((child) => parent && child.parentId === parent.id);
 
@@ -81,6 +82,7 @@ const toTree = (array: FullTreeItem[], parent?: FullTreeItem): FullTreeItem[] =>
 const trimTree = (tree: FullTreeItem[]): TreeItem[] => {
   return tree.map(x => ({
     name: x.name,
+    path: x.path,
     children: x.children && trimTree(x.children)
   }));
 };

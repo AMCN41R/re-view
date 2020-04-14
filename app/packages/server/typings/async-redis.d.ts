@@ -4,6 +4,17 @@ declare module 'async-redis' {
   function createClient(port: number, host: string): RedisClient;
   function createClient(port: number, host: string, options: RedisCreateClientOptions): RedisClient;
 
+  type RedisValueType = 'string' | 'list' | 'set' | 'zset' | 'hash' | 'stream' | 'none';
+
+  interface OverloadedCommand<T, U> {
+    (arg1: T, arg2: T, arg3: T, arg4: T, arg5: T, arg6: T): Promise<U>;
+    (arg1: T, arg2: T, arg3: T, arg4: T, arg5: T): Promise<U>;
+    (arg1: T, arg2: T, arg3: T, arg4: T): Promise<U>;
+    (arg1: T, arg2: T, arg3: T): Promise<U>;
+    (arg1: T, arg2: T | T[]): Promise<U>;
+    (arg1: T | T[]): Promise<U>;
+  }
+
   interface RedisRetryStrategyOptions {
     attempt: number;
     total_retry_time: number;
@@ -53,36 +64,11 @@ declare module 'async-redis' {
   }
 
   interface RedisCommands {
-    /**
-     * Get the value of key. If the key does not exist the special value nil is
-     * returned. An error is returned if the value stored at key is not a string,
-     * because GET only handles string values.
-     *
-     * @param  {string} key
-     * @returns the value of key, or nil when key does not exist.
-     */
-    get(key: string): Promise<string>;
 
     /**
-     * Set key to hold the string value. If key already holds a value, it is
-     * overwritten, regardless of its type. Any previous time to live associated
-     * with the key is discarded.
-     *
-     * @param  {string} key
-     * @param  {string} value
-     * @returns 'OK'
+     * Return the number of keys in the selected database.
      */
-    set(key: string, value: string): Promise<'OK'>;
-
-    /**
-     * Set key to hold the string value and set key to timeout after a given number of seconds.
-     *
-     * @param  {string} key
-     * @param  {number} seconds
-     * @param  {string} value
-     * @returns 'OK'
-     */
-    setex(key: string, seconds: number, value: string): Promise<'OK'>;
+    dbsize(): Promise<number>;
 
     /**
      * Removes the specified keys. A key is ignored if it does not exist.
@@ -111,6 +97,46 @@ declare module 'async-redis' {
     expire(key: string, seconds: number): Promise<number>;
 
     /**
+    * Set the expiration for a key as a UNIX timestamp.
+    */
+    expireat(key: string, timestamp: number): Promise<number>;
+
+    /**
+     * Remove all keys from the current database.
+     */
+    flushdb(): Promise<'OK'>;
+
+    /**
+     * Get the value of key. If the key does not exist the special value nil is
+     * returned. An error is returned if the value stored at key is not a string,
+     * because GET only handles string values.
+     *
+     * @param  {string} key
+     * @returns the value of key, or nil when key does not exist.
+     */
+    get(key: string): Promise<string>;
+
+    /**
+     * Get the value of a hash field.
+     */
+    hget(key: string, field: string): Promise<string>;
+
+    /**
+     * Get all fields and values in a hash.
+     */
+    hgetall(key: string): Promise<{ [key: string]: string }>;
+
+    /**
+     * Get information and statistics about the server.
+     */
+    info(section?: string | string[]): Promise<string>;
+
+    /**
+     * Find all keys matching the given pattern.
+     */
+    keys(pattern: string): Promise<string[]>;
+
+    /**
      * Remove the existing timeout on the given key.
      *
      * @param  {string} key
@@ -118,6 +144,57 @@ declare module 'async-redis' {
      * not have an associated timeout.
      */
     persist(key: string): Promise<number>;
+
+    /**
+     * Ping the server.
+     */
+    ping(): Promise<'PONG'>;
+
+    /**
+     * Close the connection.
+     */
+    quit(): Promise<'OK'>;
+
+    /**
+     * Rename a key.
+     */
+    rename(key: string, newkey: string): Promise<'OK'>;
+
+    /**
+     * Rename a key, only if the new key does not exist.
+     */
+    renamenx(key: string, newkey: string): Promise<number>;
+
+    /**
+     * Change the selected database for the current connection.
+     */
+    select(index: number | string): Promise<string>;
+
+    /**
+     * Set key to hold the string value. If key already holds a value, it is
+     * overwritten, regardless of its type. Any previous time to live associated
+     * with the key is discarded.
+     *
+     * @param  {string} key
+     * @param  {string} value
+     * @returns 'OK'
+     */
+    set(key: string, value: string): Promise<'OK'>;
+
+    /**
+     * Set key to hold the string value and set key to timeout after a given number of seconds.
+     *
+     * @param  {string} key
+     * @param  {number} seconds
+     * @param  {string} value
+     * @returns 'OK'
+     */
+    setex(key: string, seconds: number, value: string): Promise<'OK'>;
+
+    /**
+     * Set the value of a key, only if the key does not exist.
+     */
+    setnx(key: string, value: string): Promise<number>;
 
     /**
      * Returns the remaining time to live in seconds of a key that has a timeout.
@@ -129,6 +206,11 @@ declare module 'async-redis' {
      * associated expire, otherwise the ttl in seconds.
      */
     ttl(key: string): Promise<number>;
+
+    /**
+     * Determine the type stored at key.
+     */
+    type(key: string): Promise<RedisValueType>;
   }
 
   interface RedisClient extends RedisCommands {
@@ -136,21 +218,8 @@ declare module 'async-redis' {
 
     scan: OverloadedCommand<string, [string, string[]]>;
 
-    keys(pattern: string): Promise<string[]>;
-
-    select(index: number | string): Promise<void>
-
     on(event: 'ready' | 'connect' | 'reconnecting' | 'error' | 'warning' | 'end', listener: (...args: any[]) => void): this;
 
     auth(password: string): Promise<string>;
-  }
-
-  interface OverloadedCommand<T, U> {
-    (arg1: T, arg2: T, arg3: T, arg4: T, arg5: T, arg6: T): Promise<U>;
-    (arg1: T, arg2: T, arg3: T, arg4: T, arg5: T): Promise<U>;
-    (arg1: T, arg2: T, arg3: T, arg4: T): Promise<U>;
-    (arg1: T, arg2: T, arg3: T): Promise<U>;
-    (arg1: T, arg2: T | T[]): Promise<U>;
-    (arg1: T | T[]): Promise<U>;
   }
 }

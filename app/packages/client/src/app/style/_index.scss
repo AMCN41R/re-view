@@ -1,0 +1,65 @@
+@import "./variables.scss";
+
+@import "./layout/_index.scss";
+@import "./components/_index.scss";
+
+@import "../ui/components/_index.scss";
+@import "../ui/routes/connections/connection/_index.scss";
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+
+button, input, optgroup, select, textarea, ul {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.hover {
+  cursor: pointer;
+  &:hover {
+    background-color: #eee;
+  }
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.json-key {
+  color: brown;
+}
+
+.json-value {
+  color: navy;
+}
+
+.json-string {
+  color: olive;
+}

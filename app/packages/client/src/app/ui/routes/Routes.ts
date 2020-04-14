@@ -33,8 +33,8 @@ export namespace Routes {
      * }
      */
     home: (): void => pushRoute('/home'),
-    manageConnections: (): void => pushRoute('/connections'),
-    connection: (name: string, db: string): void => pushRoute(`/connections/${name}/${db}`),
+    server: (name: string): void => pushRoute(`/connections/${name}`),
+    database: (name: string, db: string): void => pushRoute(`/connections/${name}/${db}`),
   };
 
   export const generateHrefTo = {

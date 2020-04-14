@@ -1,18 +1,54 @@
 import * as React from 'react';
 
-import { WithStyles, Theme, createStyles, withStyles } from '@material-ui/core';
+import Routes from '../Routes';
 
-interface IProps extends WithStyles<typeof styles> { }
+import CardButton from 'ui/components/CardButton/CardButton';
+import ManageConnectionModal from 'ui/modals/ManageConnection/ManageConnectionModal';
 
-// tslint:disable-next-line:typedef
-const styles = (theme: Theme) => createStyles({
+interface IProps {
+  connections: RedisConnectionOptions[];
+}
 
-});
+const gotoServer = (name: string): void => Routes.goTo.server(name);
 
-const homePage: React.SFC<IProps> = (props): JSX.Element => (
-  <div>
-    <div>Home</div>
-  </div>
-);
+const homePage: React.SFC<IProps> = (props): JSX.Element => {
+  const [modalOpen, setModalOpen] = React.useState<boolean>(false);
+  const [selectedServer, setSelectedServer] = React.useState<RedisConnectionOptions>();
 
-export default withStyles(styles)(homePage);
+  return (
+    <>
+      <div className="flex-grow-1 p-12">
+        <div className="m-bottom-12">
+          Please select a server and database.
+        </div>
+
+        {
+          props.connections.map((con, i) => (
+            <CardButton
+              key={i}
+              text={con.name}
+              iconClassName="fas fa-server fa-fw"
+              className="m-bottom-12"
+              onClick={() => gotoServer(con.name)}
+              showOptionsButton={true}
+              onOptionsClick={() => {
+                setSelectedServer(con);
+                setModalOpen(true);
+              }}
+            />
+          ))
+        }
+
+      </div>
+
+      {/* MODALS */}
+      <ManageConnectionModal
+        open={modalOpen}
+        server={selectedServer}
+        onClose={() => setModalOpen(false)}
+      />
+    </>
+  );
+};
+
+export default homePage;

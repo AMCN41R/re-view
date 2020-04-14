@@ -1,0 +1,19 @@
+select {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  //background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #000;
+  }
+
+  &:focus {
+    outline: 0;
+    border-color: #0062cc;
+  }
+
+
+}

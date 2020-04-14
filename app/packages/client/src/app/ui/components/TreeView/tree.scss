@@ -1,0 +1,29 @@
+.tree {
+  padding: 0;
+  margin: 0;
+
+  &.tree-light {
+    > li {
+      color: #fff;
+    }
+  }
+}
+
+.tree-node {
+  @extend .hover;
+  padding: 3px;
+  width: 100%;
+}
+
+.tree-node-children {
+  padding-left: 18px;
+}
+
+.tree-item {
+  @extend .hover;
+  padding: 3px;
+}
+
+.icon-folder {
+  color: #b1b125;
+}

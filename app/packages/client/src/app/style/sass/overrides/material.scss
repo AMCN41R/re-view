@@ -1,6 +1,0 @@
-
-// this prevents a border remaining after clicking a button
-// may have accessability implications, but better for now
-button:focus {
-  outline:0!important;
-}

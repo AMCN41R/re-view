@@ -1,0 +1,17 @@
+.input-box {
+  padding: 6px 12px;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  box-sizing: border-box;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+  &.input-box-search {
+    padding-left: 36px;
+    background-image: url('../../static/icons/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+  }
+}

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/server.js",
     "build": "tsc",
-    "build:run": "npm run build && npm start"
+    "build:run": "npm run build && npm start",
+    "watch": "tsc --watch"
   },
   "keywords": [],
   "author": "",

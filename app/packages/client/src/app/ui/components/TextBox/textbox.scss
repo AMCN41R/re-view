@@ -1,0 +1,65 @@
+.textbox {
+  position: relative;
+  padding: 6px;
+  margin: 6px 0;
+
+  .error {
+    border-color: #dc3545;
+  }
+
+  .label-readonly {
+    position: absolute;
+    top: 0;
+    left: 12px;
+    line-height: 1;
+    font-size: 12px;
+    color: #777;
+    background-color: transparent;
+  }
+
+  .label-before {
+    line-height: 1.5;
+    font-size: 12px;
+    top: -4px;
+    background: transparent;
+    padding: 0 6px;
+    left: 9px;
+  }
+
+  label::before {
+    content: attr(title);
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    line-height: 1;
+    font-size: 14px;
+    color: #777;
+    transition: 200ms all;
+  }
+
+  input {
+    width: 100%;
+    line-height: 40px;
+    padding: 6px 12px 0 12px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: transparent;
+    color: #222;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    &:hover {
+      border-color: #000;
+    }
+    &:focus {
+      outline: 0;
+      border-color: #0062cc;
+    }
+    &:valid + label::before {
+      @extend .label-before;
+    }
+    &:focus + label::before {
+      @extend .label-before;
+      color: #0062cc;
+    }
+  }
+}

@@ -5,15 +5,13 @@ import { Logger } from 'common/Logger';
  */
 export namespace FetchBase {
 
-  const baseUrl = '/api';
-
   export const get = async <T = any>(url: string): Promise<FetchResponse<T>> => {
-    const response = await fetch(`${baseUrl}/${url}`);
+    const response = await fetch(url);
     return await parse<T>(response);
   };
 
   export const post = async <T = any>(url: string, body: any): Promise<FetchResponse<T>> => {
-    const response = await fetch(`${baseUrl}/${url}`, {
+    const response = await fetch(url, {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -25,7 +23,7 @@ export namespace FetchBase {
   };
 
   export const put = async <T = any>(url: string, body: any): Promise<FetchResponse<T>> => {
-    const response = await fetch(`${baseUrl}/${url}`, {
+    const response = await fetch(url, {
       method: 'PUT',
       body: JSON.stringify(body),
       headers: {
@@ -37,7 +35,7 @@ export namespace FetchBase {
   };
 
   export const del = async (url: string): Promise<boolean> => {
-    const response = await fetch(`${baseUrl}/${url}`, {
+    const response = await fetch(url, {
       method: 'DELETE'
     });
 
@@ -46,7 +44,7 @@ export namespace FetchBase {
 
   const parse = async <T>(response: Response): Promise<FetchResponse<T>> => {
     if (!response.ok) {
-      Logger.warn('api request faliure', response.statusText);
+      Logger.warn('api request failure', response.statusText);
 
       if (response.status === 500) {
         throw new Error('An unexpected error has occurred. Please refresh and try again.');

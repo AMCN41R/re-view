@@ -7,20 +7,21 @@ import {
 
 import NotFound from './errors/NotFound';
 
-import HomePage from './home/HomePage';
-import ManageConnections from './manage/ManageConnectionsContainer';
-import Connection from './connection/ConnectionContainer';
+import HomePage from './home/HomePageContainer';
+
+import ServerView from './connections/connection/ServerViewContainer';
+import DatabaseView from './connections/connection/DatabaseViewContainer';
 
 /**
  * Define our routes here.
  */
-const router = (): JSX.Element => (
+const router: React.SFC = (props): JSX.Element => (
   <Switch>
     <Redirect exact from="/" to="/home" />
     <Route path="/home" component={HomePage} />
 
-    <Route path="/connections/:name/:db" component={Connection} />
-    <Route path="/connections" component={ManageConnections} />
+    <Route path="/connections/:name/:db" component={DatabaseView} />
+    <Route path="/connections/:name" component={ServerView} />
 
     <Route component={NotFound} />
   </Switch>

@@ -1,9 +1,13 @@
-type RedisClientInfo = {
+type Keyed<T> = { [key: string]: T };
+
+type RedisConnectionOptions = {
   name: string;
   host: string;
   port: number;
   password?: string;
   useSsl?: boolean;
+  sslPort?: number;
+  namespaceSeparator?: string;
 };
 
 type CreateRedisClientResult = {
@@ -11,9 +15,14 @@ type CreateRedisClientResult = {
   error?: Error;
 };
 
+type DbInfo = {
+  db: number;
+  keys: number;
+};
+
 type ClientDatabaseResult = {
   name: string;
-  dbs: number[];
+  dbs: DbInfo[];
 };
 
 type DbKeysRequest = {
@@ -23,6 +32,7 @@ type DbKeysRequest = {
 
 type TreeItem = {
   name: string;
+  path: string;
   children?: TreeItem[];
 };
 
@@ -35,3 +45,10 @@ type DbKeySearchResult = {
   cursor: string;
   items: TreeItem[];
 };
+
+type RedisInfo = {
+  server: string[];
+  keys: {
+    [key: number]: number
+  }
+}

@@ -1,7 +1,7 @@
 import { ValidationError } from '../errors/ValidationError';
 
 export namespace Validate {
-  export const redisConnectionInfo = (value: RedisClientInfo): void => {
+  export const redisConnectionInfo = (value: RedisConnectionOptions): void => {
     checkNotNullOrUndefined(value);
     checkIsValidString(value.name);
     checkIsValidString(value.host);

@@ -1,0 +1,7 @@
+[
+  {
+    "name": "local",
+    "host": "localhost",
+    "port": 6379
+  }
+]

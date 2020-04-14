@@ -6,20 +6,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <link rel="stylesheet" type="text/css" href="/vendor/fontawesome.css">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+    }
+
+    #appLoading {
+      text-align: center;
+      padding: 100px 0;
+      background: #404854;
+      color: ghostwhite;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    #appLoading .icon {
+      font-size: 48px;
+    }
+
+    #appLoading .text {
+      margin-top: 20px;
+      font-style: italic;
+    }
+  </style>
+
   <title>Redis Manager</title>
 </head>
 
 <body>
 
   <div id="app">
-    <div style="text-align: center; padding: 10px 0;">
-      Loading...
+    <div id="appLoading">
+      <i class="icon fas fa-cog fa-spin"></i>
+      <div class="text">Getting things ready...</div>
     </div>
   </div>
 
   <!-- Dependencies -->
-  <script src="/react.js"></script>
-  <script src="/react-dom.js"></script>
+  <script src="/vendor/react.js"></script>
+  <script src="/vendor/react-dom.js"></script>
 
 </body>
 

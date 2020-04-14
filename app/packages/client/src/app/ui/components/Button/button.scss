@@ -1,0 +1,148 @@
+.__icon {
+  height: 46px;
+  width: 46px;
+  font-size: 16px;
+  background-color: transparent;
+  border-color: transparent;
+  color: $black;
+  border-radius: 4px;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+button {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: $black;
+  padding: 6px 12px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: 0.3s;
+
+  // PRIMARY
+  &.btn {
+    color: $white;
+    background-color: $blue;
+    border-color: $blue;
+
+    &:hover {
+      background-color: $blue-hover;
+      border-color: $blue-hover;
+    }
+  }
+
+  &.btn-outline {
+    border-color: $blue;
+    color: $blue;
+
+    &:hover {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+
+  &.btn-icon {
+    @extend .__icon;
+
+    &:hover {
+      color: $white;
+      background-color: $blue;
+    }
+  }
+
+  // ALT
+  &.btn-alt {
+    color: $darkblue;
+    background-color: $gray;
+    border-color: $gray;
+
+    &:hover {
+      background-color: $lightgray;
+      border-color: $lightgray;
+    }
+  }
+
+  &.btn-outline-alt {
+    border-color: $gray;
+    color: $gray;
+
+    &:hover {
+      background-color: $gray;
+      color: $darkblue;
+    }
+  }
+
+  &.btn-icon-alt {
+    @extend .__icon;
+
+    &:hover {
+      color: $white;
+      background-color: $darkgray;
+    }
+  }
+
+  // SUCCESS
+  &.btn-success {
+    background-color: $success;
+    border-color: $success;
+    color: $white;
+
+    &:hover {
+      background-color: $success-light;
+      border-color: $success-light;
+    }
+  }
+
+  &.btn-outline-success {
+    border-color: $success;
+    color: $success;
+
+    &:hover {
+      background-color: $success;
+      color: $white;
+    }
+  }
+
+  &.btn-icon-success {
+    @extend .__icon;
+
+    &:hover {
+      color: $white;
+      background-color: $success;
+    }
+  }
+
+  // DANDER
+  &.btn-danger {
+    background-color: $error;
+    border-color: $error;
+    color: $white;
+
+    &:hover {
+      background-color: $error-light;
+      border-color: $error-light;
+    }
+  }
+
+  &.btn-outline-danger {
+    border-color: $error;
+    color: $error;
+
+    &:hover {
+      background-color: $error;
+      color: $white;
+    }
+  }
+
+  &.btn-icon-danger {
+    @extend .__icon;
+
+    &:hover {
+      color: $white;
+      background-color: $error;
+    }
+  }
+}
